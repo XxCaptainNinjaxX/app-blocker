@@ -1,4 +1,4 @@
-# Devlog
+# Journal
 
 ## M0 (11/17/26) 12:22am
 
@@ -6,7 +6,7 @@ so. not sure what to write in here but, just started and intalized this project.
 
 purpouse of this project is yes to build a fun little thing that can help me out but ainly restore my motivation for code once more, cause yk at the end of the day im a glorified cs major lmfao gotta know how to code.
 
-found out:
+### found out
 
 - **main.js** = main process, window, app stuff, etc
 - **preload.js** = bridge between page and actual scripts/code
@@ -18,25 +18,36 @@ found out:
 
 yeah so realized that this was going to be more of a journal rather than a devlog soooo renamed and gonna start a yap session now lmfao
 
-> **new concepts**:
+> ### new concepts
 
-```
-- const x = require(...)
-```
+#### `const x = require(...)`
 
 - varaible needed cause returns exports, otherwise just thrown away.
 - require like a door between files, withought would become global rather than private
 
-```
-child_process.exec
-```
+#### `child_process.exec`
 
 - works by spawning/creating new shell and runs command
 - can use ANY commands as one would use in terminal
   - **holds all memory until output** so there is a buffer memory size limit, (default 1mb)
 
----
+#### ICP (Inter process Communcation)
 
-> What has been done
+- how processes talk to one another
+
+#### Main Process 'backend'
+
+- handles Node.js code,
+- no UI
+- database
+
+#### Render Process 'frontend'
+
+- UI
+- sends data to backend / main process
+
+> ### What has been done
 
 - added style sheet + connected it
+- restructured main and render folders
+-
