@@ -15,3 +15,28 @@ found out:
 - **npm start** to start the window/application rather than the **npm run dev** for react
 
 ## M1
+
+yeah so realized that this was going to be more of a journal rather than a devlog soooo renamed and gonna start a yap session now lmfao
+
+> **new concepts**:
+
+```
+- const x = require(...)
+```
+
+- varaible needed cause returns exports, otherwise just thrown away.
+- require like a door between files, withought would become global rather than private
+
+```
+child_process.exec
+```
+
+- works by spawning/creating new shell and runs command
+- can use ANY commands as one would use in terminal
+  - **holds all memory until output** so there is a buffer memory size limit, (default 1mb)
+
+---
+
+> What has been done
+
+- added style sheet + connected it

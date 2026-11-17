@@ -2,7 +2,7 @@
   "name": "app-blocker",
   "version": "0.1.0",
   "description": "Windows focus app that force-closes chosen apps while a timer runs",
-  "main": "main.js",
+  "main": "main/main.js",
   "scripts": {
     "start": "electron ."
   },
