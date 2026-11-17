@@ -18,7 +18,7 @@ function createWindow() {
 }
 
 var cnt = 0;
-ipcMain.on("run-command", () => {
+ipcMain.on("main-lowerPitch", () => {
   exec(
     'powershell -Command "[console]::beep(200, 600)"',
     (error, stdout, stderr) => {
@@ -27,7 +27,21 @@ ipcMain.on("run-command", () => {
         return;
       }
       cnt++;
-      console.log("works! " + cnt);
+      console.log("Lower pitch works! " + cnt);
+    },
+  );
+});
+
+ipcMain.on("main-higherPitch", () => {
+  exec(
+    'powershell -Command "[console]::beep(500, 600)"',
+    (error, stdout, stderr) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      cnt++;
+      console.log("Higher pitch works! " + cnt);
     },
   );
 });

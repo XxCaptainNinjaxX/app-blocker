@@ -2,7 +2,8 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 //anything put in here is available inside renderer process
 const API = {
-  runCommand: () => ipcRenderer.send("run-command"),
+  preloadLowerPitch: () => ipcRenderer.send("main-lowerPitch"),
+  preloadHigherPitch: () => ipcRenderer.send("main-higherPitch"),
 };
 
 //can name the window.___ wtv, just needs to match up with

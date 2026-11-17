@@ -14,7 +14,7 @@ purpouse of this project is yes to build a fun little thing that can help me out
 - **index,styles,package,claude** all self explanatory
 - **npm start** to start the window/application rather than the **npm run dev** for react
 
-## M1
+## M1 (11/17/26) 3:10am
 
 yeah so realized that this was going to be more of a journal rather than a devlog soooo renamed and gonna start a yap session now lmfao
 
@@ -35,14 +35,53 @@ yeah so realized that this was going to be more of a journal rather than a devlo
 
 - how processes talk to one another
 
+```
+
+ipcMain.on("[function name]", () => {
+  exec(
+    'powershell -Command "[windows command]"',
+    (error, stdout, stderr) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      [FUNCTION LOGIC]
+
+
+      //cnt++;
+      //console.log("Higher pitch works! " + cnt);
+    },
+  );
+});
+
+
+```
+
+`err` = 'error
+
+error itself, ex = command failed [command]
+
+`std` = 'standard error'
+
+explanation of error, ex: "ls: nonexistent-folder: No such file or directory"
+
+`stdout` = 'standard output'
+
+output of command, ex: `echo "hello"` => hello
+
 #### Main Process 'backend'
 
-- handles Node.js code,
+- Node.js process, runs in vs code terminal
+  - console.log -> vs code terminal
 - no UI
 - database
+-
 
 #### Render Process 'frontend'
 
+- chromium page,
+  - console.log -> app console
 - UI
 - sends data to backend / main process
 
@@ -50,4 +89,4 @@ yeah so realized that this was going to be more of a journal rather than a devlo
 
 - added style sheet + connected it
 - restructured main and render folders
--
+- btn performs windows command
