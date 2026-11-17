@@ -90,3 +90,17 @@ output of command, ex: `echo "hello"` => hello
 - added style sheet + connected it
 - restructured main and render folders
 - btn performs windows command
+
+## M1 (11/17/26) 5:31pm
+
+> added
+- three btns, high/low pitch to test out the ICP commands and impliement window function, another btn to show top 10 cpu usage programs 
+
+>yap / decription 
+
+- attempted to play around with variables to see how to correctly build names since everytime i want to create a btn to do something, i need to edit 4 files, html, render (frondend), preload (bridge), main (backend). 
+  - rn using:
+    - `main-[function name]` in main.js
+    - `preload_[function name]` in preload.js
+    - `render[function name]` in render.js
+
