@@ -5,6 +5,8 @@ const API = {
   preload_LowerPitch: () => ipcRenderer.send("main-lowerPitch"),
   preload_HigherPitch: () => ipcRenderer.send("main-higherPitch"),
   preload_TenProcesses: () => ipcRenderer.send("main-TenProcesses"),
+
+  preload_getTableData: () => ipcRenderer.invoke("main-getTableData"),
 };
 
 //can name the window.___ wtv, just needs to match up with

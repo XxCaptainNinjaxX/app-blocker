@@ -91,16 +91,54 @@ output of command, ex: `echo "hello"` => hello
 - restructured main and render folders
 - btn performs windows command
 
-## M1 (11/17/26) 5:31pm
+## M1 (11/17/26)
 
 > added
-- three btns, high/low pitch to test out the ICP commands and impliement window function, another btn to show top 10 cpu usage programs 
 
->yap / decription 
+- three btns, high/low pitch to test out the ICP commands and impliement window function, another btn to show top 10 cpu usage programs
+- toggle visability function in render.js + created table for it
 
-- attempted to play around with variables to see how to correctly build names since everytime i want to create a btn to do something, i need to edit 4 files, html, render (frondend), preload (bridge), main (backend). 
+> yap / decription
+
+- attempted to play around with variables to see how to correctly build names since everytime i want to create a btn to do something, i need to edit 4 files, html, render (frondend), preload (bridge), main (backend).
   - rn using:
     - `main-[function name]` in main.js
     - `preload_[function name]` in preload.js
     - `render[function name]` in render.js
 
+> new shit
+
+### function vs async function
+
+`function`
+
+- immediate code / logic
+
+```
+function getGreeting() {
+  return "Hello, world!";
+} // Output: "Hello, world!"
+```
+
+`async function`
+
+- wraps return value in 'promise'
+- utlizes `await`
+
+```
+async function fetchUserData() {
+  console.log("1. Starting fetch...");
+
+  // Pauses ONLY inside fetchUserData until the fetch Promise resolves
+  const response = await fetch("https://example.com");
+  const data = await response.json();
+
+  console.log("2. Data received:", data);
+  return data;
+}
+
+fetchUserData();
+console.log("3. This runs BEFORE step 2 finishes!");
+
+
+```

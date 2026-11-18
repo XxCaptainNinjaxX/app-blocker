@@ -64,6 +64,14 @@ ipcMain.on("main-TenProcesses", () => {
   );
 });
 
+ipcMain.handle("main-getTableData", async () => {
+  return [
+    { id: 1, name: "Chrome.exe", status: "Blocked" },
+    { id: 2, name: "Discord.exe", status: "Allowed" },
+    { id: 3, name: "Steam.exe", status: "Blocked" },
+  ];
+});
+
 app.whenReady().then(createWindow);
 
 // On Windows, closing the last window should quit the app.

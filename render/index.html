@@ -13,7 +13,22 @@
       <button id="btn-low">Run low pitch</button>
       <button id="btn-high">Run high pitch</button>
       <button id="btn-processes">Show top ten CPU processes</button>
+
+      <button id="btn-toggleTable">Toggle Table visability</button>
+      <button id="btn-populate">Populate table</button>
     </div>
+    <table id="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- dynamic rows-->
+      </tbody>
+    </table>
   </body>
 
   <script src="render.js"></script>

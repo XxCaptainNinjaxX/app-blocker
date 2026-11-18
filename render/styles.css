@@ -13,3 +13,30 @@ body {
   align-items: center;
   gap: 14px;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.is-hidden {
+  display: none;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dddddd;
+}
+
+thead th {
+  background-color: #f4f6f8;
+  font-weight: 600;
+  border-bottom: 2px solid #cccccc;
+}
+
+/* Highlight row on mouse hover */
+tbody tr:hover {
+  background-color: #f1f5f9;
+}

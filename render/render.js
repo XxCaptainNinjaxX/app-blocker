@@ -4,12 +4,30 @@ const button = document.getElementById("btn");
 const btnLow = document.getElementById("btn-low");
 const btnHigh = document.getElementById("btn-high");
 const btnProcesses = document.getElementById("btn-processes");
+const btnToggleTable = document.getElementById("btn-toggleTable");
+const btnPopulate = document.getElementById("btn-populate");
+
+const tableBody = document.getElementById("tableBody");
+const table = document.getElementById("table");
 
 button.addEventListener("click", test);
 
 btnLow.addEventListener("click", lowPitch);
 btnHigh.addEventListener("click", highPitch);
 btnProcesses.addEventListener("click", getTopUsage);
+
+btnPopulate.addEventListener("click", renderTable);
+
+//toggles table visability
+/*
+btnToggleTable.addEventListener("click", () => {
+  if (table.style.display == "none") table.style.display = "flow-root";
+  else table.style.display = "none";
+});
+*/
+btnToggleTable.addEventListener("click", () => {
+  table.classList.toggle("is-hidden");
+});
 
 //-------------------------------
 function test() {
@@ -28,8 +46,35 @@ function highPitch() {
 
 //-----
 function getTopUsage() {
-  console.log("(render.js)fucking work dammit ");
+  console.log("(render.js) fucking work dammit ");
   window.api.preload_TenProcesses();
 }
 
+//----
 
+async function renderTable() {
+  //fetch data
+  const rowData = await window.api.preload_getTableData();
+  tableBody.innerHTML = " ";
+
+  //loop and create each cell
+  rowData.forEach((item) => {
+    const row = tableBody.insertRow();
+
+    const nameCell = row.insertCell(0);
+    const statusCell = row.insertCell(1);
+    const actionCell = row.insertCell(2);
+
+    //populating table
+    nameCell.textContent = item.name;
+    statusCell.textContent = item.status;
+
+    // interactive elements
+    const btn = document.createElement("button");
+    btn.textContent = "Toggle";
+    btn.onclick = () => {
+      alert(`Clicked ${item.name}`);
+    };
+    actionCell.appendChild(btn);
+  });
+}
