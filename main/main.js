@@ -48,17 +48,14 @@ ipcMain.on("main-higherPitch", () => {
 
 ipcMain.on("main-TenProcesses", () => {
   exec(
-    'powershell -Command "Get-Process | Sort-Object CPU -Descending | Select-Object -First 10"',
+    'powershell -Command "Get-Process | Sort-Object WS -Descending | Select-Object -First 10"',
     (error, stdout, stderr) => {
       if (error) {
         console.log("Error: " + error);
         return;
       }
-      console.log("mainProcesses function works");
       console.log(
-        "\n\n --- \n\nTop 10 Processes by CPU usage: " +
-          stdout +
-          "\n\n ---------",
+        "\n--- \nTop 10 Processes by Memory usage: \n" + stdout + "---------",
       );
     },
   );
