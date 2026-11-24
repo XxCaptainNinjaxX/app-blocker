@@ -46,24 +46,29 @@ ipcMain.on("main-higherPitch", () => {
   );
 });
 
-ipcMain.on("main-TenProcesses", () => {
+// module-level so both the TenProcesses handler (writes) and getNames handler (reads) share it
+let processNames = [];
+
+ipcMain.on("main-TenProcesses", async () => {
   exec(
     //gets top 10 processes running ranked by memory
     //'powershell -Command "Get-Process | Sort-Object WS -Descending | Select-Object -First 10"',
 
     //gets top 10 processes running ranked by memory + converts to json
-    'powershell -Command "Get-Process | Sort-Object WS -Descending | Select-Object -Skip 1 -First 10  | Select-Object ProcessName | ConvertTo-Json"',
+    'powershell -Command "Get-Process | Sort-Object WS -Descending | Select-Object -First 10  | Select-Object ProcessName | ConvertTo-Json"',
     (error, stdout, stderr) => {
       if (error) {
         console.log("Error: " + error);
         return;
       }
-      const JSONprocesses = JSON.parse(stdout);
+      let processes = JSON.parse(stdout.trim());
+      processNames = processes.map((item) => item.ProcessName);
+
       //let arrayProcesses = stringProcesses.map((process) => process.ProcessName);
 
-      for (let i = 0; i < JSONprocesses.length; i++) {
-        console.log(JSONprocesses[i].ProcessName);
-      }
+      // for (let i = 0; i < processNames.length; i++) {
+      //   console.log(processNames[i].ProcessName);
+      // }
 
       console.log(
         "\n--- \nTop 10 Processes by Memory usage: \n" + stdout + "---------",
@@ -72,12 +77,13 @@ ipcMain.on("main-TenProcesses", () => {
   );
 });
 
-ipcMain.handle("main-getTableData", async () => {
-  return [
-    { id: 1, name: "Chrome.exe", status: "Blocked" },
-    { id: 2, name: "Discord.exe", status: "Allowed" },
-    { id: 3, name: "Steam.exe", status: "Blocked" },
-  ];
+ipcMain.handle("main-getNames", async () => {
+  return processNames;
+  // return [
+  //   { id: 1, name: "Chrome.exe", status: "Blocked" },
+  //   { id: 2, name: "Discord.exe", status: "Allowed" },
+  //   { id: 3, name: "Steam.exe", status: "Blocked" },
+  // ];
 });
 
 app.whenReady().then(createWindow);

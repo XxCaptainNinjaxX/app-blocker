@@ -69,11 +69,14 @@ function getTopUsage() {
 
 async function renderTable() {
   //fetch data
-  const rowData = await window.api.preload_getTableData();
+  const rowData = await window.api.preload_getNames();
   tableBody.innerHTML = " ";
 
   //loop and create each cell
-  rowData.forEach((item) => {
+  // rowData is an array of process-name strings, already sorted by memory,
+  // so index + 1 is the rank (1 = most memory)
+  rowData.forEach((processName, index) => {
+    const rank = index + 1;
     const row = tableBody.insertRow();
 
     const nameCell = row.insertCell(0);
@@ -81,14 +84,14 @@ async function renderTable() {
     const actionCell = row.insertCell(2);
 
     //populating table
-    nameCell.textContent = item.name;
-    statusCell.textContent = item.status;
+    nameCell.textContent = `${rank}. ${processName}`;
+    statusCell.textContent = "";
 
     // interactive elements
     const btn = document.createElement("button");
     btn.textContent = "Toggle";
     btn.onclick = () => {
-      alert(`Clicked ${item.name}`);
+      alert(`Clicked ${rank}. ${processName}`);
     };
     actionCell.appendChild(btn);
   });
