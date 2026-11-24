@@ -1,6 +1,7 @@
 //const { contextBridge } = require("electron");
 
 const button = document.getElementById("btn");
+const btnTest1 = document.getElementById("btn-test1");
 const btnLow = document.getElementById("btn-low");
 const btnHigh = document.getElementById("btn-high");
 const btnProcesses = document.getElementById("btn-processes");
@@ -11,6 +12,7 @@ const tableBody = document.getElementById("tableBody");
 const table = document.getElementById("table");
 
 button.addEventListener("click", test);
+btnTest1.addEventListener("click", test1);
 
 btnLow.addEventListener("click", lowPitch);
 btnHigh.addEventListener("click", highPitch);
@@ -33,6 +35,19 @@ btnToggleTable.addEventListener("click", () => {
 function test() {
   console.log("---");
   for (var i = 0; i <= 51; i++) console.log("hi " + i);
+}
+
+function test1() {
+  let x = [
+    { name: "person_name" },
+    { name: "person_name1" },
+    { name: "person_name2" },
+    { name: "person_name3" },
+  ];
+
+  for (var i = 0; i <= x.length - 1; i++) {
+    console.log(x[i].name);
+  }
 }
 
 function lowPitch() {

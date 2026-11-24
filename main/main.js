@@ -48,12 +48,23 @@ ipcMain.on("main-higherPitch", () => {
 
 ipcMain.on("main-TenProcesses", () => {
   exec(
-    'powershell -Command "Get-Process | Sort-Object WS -Descending | Select-Object -First 10"',
+    //gets top 10 processes running ranked by memory
+    //'powershell -Command "Get-Process | Sort-Object WS -Descending | Select-Object -First 10"',
+
+    //gets top 10 processes running ranked by memory + converts to json
+    'powershell -Command "Get-Process | Sort-Object WS -Descending | Select-Object -Skip 1 -First 10  | Select-Object ProcessName | ConvertTo-Json"',
     (error, stdout, stderr) => {
       if (error) {
         console.log("Error: " + error);
         return;
       }
+      const JSONprocesses = JSON.parse(stdout);
+      //let arrayProcesses = stringProcesses.map((process) => process.ProcessName);
+
+      for (let i = 0; i < JSONprocesses.length; i++) {
+        console.log(JSONprocesses[i].ProcessName);
+      }
+
       console.log(
         "\n--- \nTop 10 Processes by Memory usage: \n" + stdout + "---------",
       );
