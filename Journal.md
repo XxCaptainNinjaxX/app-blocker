@@ -142,3 +142,85 @@ console.log("3. This runs BEFORE step 2 finishes!");
 
 
 ```
+
+## M1 (11/27/26)
+
+### Design
+
+went ahead and designed the whole app, took about 4 ish hrs to figure out right layout, what i wanted functianality, etc etc. deciedd one two core things, one taskmanager 2.0 and the orignal idea (study block thing)
+
+### JavaScript Array Deduplication & Filtering Notes
+
+#### 1. How `new Set()` Works
+
+A **`Set`** is a built-in JavaScript collection that stores **only unique values**. Under the hood, it uses a hash table to track values in near-constant time (O(1)), making it much faster than scanning an array repeatedly.
+
+- **Iteration & Hashing:** Passing an array into `new Set(arr)` loops through the items from left to right and checks if each exact value (`===`) already exists.
+- **Skipping Duplicates:** If a value is already in the `Set`, JavaScript ignores it. The first occurrence stays in its original spot.
+- **Order Preservation:** By specification, `Set` remembers the **exact insertion order** of elements.
+
+```javascript
+const items = ["apple", "banana", "apple", "cherry"];
+const uniqueSet = new Set(items);
+// Set(3) { "apple", "banana", "cherry" }
+```
+
+#### 2. Why the Three Periods (`...`) Are Needed
+
+The three periods (`...`) are the **spread syntax**. Because a `Set` is not a standard array, it lacks array methods like `.map()` or `.filter()`. Wrapping it in `[...new Set(arr)]` unpacks each item out of the `Set` and places it into a brand-new array.
+
+```javascript
+// Without ... (Wrong: creates an array containing 1 Set object)
+const wrong = [new Set(["a", "b"])]; // [ Set(2) { "a", "b" } ]
+
+// With ... (Right: unpacks elements into a new array)
+const right = [...new Set(["a", "b"])]; // [ "a", "b" ]
+```
+
+#### 3. Filtering & Blocked Lists with `.filter()`
+
+The **`.filter()`** method creates a new array containing only the elements that pass a test function (returning `true`). Pairing `.filter()` with a `Set` is the fastest way to remove items found in a blocked list.
+
+##### Exact Match Blocked List
+
+```javascript
+const processes = ["chrome.exe", "notepad.exe", "steam.exe", "chrome.exe"];
+const blockedSet = new Set(["steam.exe", "discord.exe"]);
+
+// Deduplicate first, then keep items NOT in blockedSet
+const cleanList = [...new Set(processes)].filter(
+  (item) => !blockedSet.has(item),
+);
+// ["chrome.exe", "notepad.exe"]
+```
+
+##### Case-Insensitive Blocked List & Deduplication
+
+Because `Set` uses strict equality (`"Apple" !== "apple"`), normalize strings with `.toLowerCase()` when casing varies:
+
+```javascript
+const rawProcesses = ["Chrome.exe", "Steam.exe", "chrome.exe", "NOTEPAD.EXE"];
+const blockedList = ["steam.exe", "discord.exe"];
+
+const blockedSet = new Set(blockedList.map((item) => item.toLowerCase()));
+const seen = new Set();
+
+const allowed = rawProcesses.filter((item) => {
+  const lower = item.toLowerCase();
+  if (blockedSet.has(lower) || seen.has(lower)) {
+    return false;
+  }
+  seen.add(lower);
+  return true;
+});
+// ["Chrome.exe", "NOTEPAD.EXE"]
+```
+
+#### Quick Cheat Sheet
+
+| Goal                                  | Pattern                                             | Mutates Original? |
+| :------------------------------------ | :-------------------------------------------------- | :---------------- |
+| **Remove exact duplicates**           | `[...new Set(arr)]`                                 | No                |
+| **Remove matching items**             | `arr.filter(x => x !== "target")`                   | No                |
+| **Remove items in a blocked list**    | `arr.filter(x => !blockedSet.has(x))`               | No                |
+| **Deduplicate + filter blocked list** | `[...new Set(arr)].filter(x => !blockedSet.has(x))` | No                |

@@ -46,16 +46,13 @@ ipcMain.on("main-higherPitch", () => {
   );
 });
 
-// TODO: the one list of protected names (never-kill list + hidden-from-display). Define once, here.
 const blocked = ["Memory Compression", "MsMpEng", "Code"];
 
-// TODO: takes an array of process-name strings, returns a new array without the protected ones.
-// Must not touch processNames or the original array.
-let item;
-function filterProcess(processNameList) {
-  const items = processNameList;
-  console.log("BEFORE filter: \n\n" + items);
+//removes dups
+function filterDup(processNameList) {
+  const items = [...new Set(processNameList)];
 
+  /*
   for (let i = 0; i < items.length; i++) {
     items[i] = items[i].trim();
     console.log("item: " + items[i]);
@@ -68,12 +65,14 @@ function filterProcess(processNameList) {
       }
     }
   }
+    */
+
   console.log("\n\n AFTER filter: \n\n" + items);
 }
 
 // module-level so both main and render can see/acsess
 
-let clean_processNames = [];
+let unDuplicated = [];
 ipcMain.on("main-TenProcesses", async () => {
   exec(
     //gets top 10 processes running ranked by memory
@@ -87,10 +86,10 @@ ipcMain.on("main-TenProcesses", async () => {
         return;
       }
       let processes = JSON.parse(stdout.trim());
-      let dirty_processNames = [];
-      dirty_processNames = processes.map((item) => item.ProcessName);
-      //filters and re-asigns
-      clean_processNames = filterProcess(dirty_processNames);
+      let ogProcessNames = [processes.map((item) => item.ProcessName)];
+
+      //removes duplicates
+      unDuplicated = filterDup(ogProcessNames);
 
       //console.log("\n--- \nTop 10 Processes by Memory usage: \n" + stdout + "---------");
     },
@@ -98,7 +97,7 @@ ipcMain.on("main-TenProcesses", async () => {
 });
 
 ipcMain.handle("main-getNames", async () => {
-  return processNames;
+  return unDuplicated;
   // return [
   //   { id: 1, name: "Chrome.exe", status: "Blocked" },
   //   { id: 2, name: "Discord.exe", status: "Allowed" },
