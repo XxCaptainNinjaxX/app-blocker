@@ -47,22 +47,28 @@ ipcMain.on("main-higherPitch", () => {
 });
 
 // TODO: the one list of protected names (never-kill list + hidden-from-display). Define once, here.
-const blocked = ["Memory Compression", "MsMpEng"];
+const blocked = ["Memory Compression", "MsMpEng", "Code"];
 
 // TODO: takes an array of process-name strings, returns a new array without the protected ones.
 // Must not touch processNames or the original array.
-function filterProcessNames(processNameList) {
+let item;
+function filterProcess(processNameList) {
   const items = processNameList;
-  const filtered = [];
+  console.log("BEFORE filter: \n\n" + items);
 
-  for (let item in items) {
-    const cleanItem = item.trim();
+  for (let i = 0; i < items.length; i++) {
+    items[i] = items[i].trim();
+    console.log("item: " + items[i]);
 
-    for (block in blocked) {
-      if (cleanItem === block) {
+    for (let y = 0; y < blocked.length; y++) {
+      console.log("blocked: " + blocked[y]);
+      if (items[i] === blocked[y]) {
+        const index = items.indexOf(items[i]);
+        items.splice(index);
       }
     }
   }
+  console.log("\n\n AFTER filter: \n\n" + items);
 }
 
 // module-level so both main and render can see/acsess
@@ -84,11 +90,9 @@ ipcMain.on("main-TenProcesses", async () => {
       let dirty_processNames = [];
       dirty_processNames = processes.map((item) => item.ProcessName);
       //filters and re-asigns
-      clean_processNames = filterProcessNames(dirty_processNames);
+      clean_processNames = filterProcess(dirty_processNames);
 
-      console.log(
-        "\n--- \nTop 10 Processes by Memory usage: \n" + stdout + "---------",
-      );
+      //console.log("\n--- \nTop 10 Processes by Memory usage: \n" + stdout + "---------");
     },
   );
 });
